@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Home</title>
+</head>
+<body>
+    <form action="{% url 'add' %}" method="post">
+        {% csrf_token %}
+        Company: <input type="text" name="company"><br>
+        Description: <input type="text" name="description"><br>
+        Price: <input type="text" name="price"><br>
+        Stock: <input type="text" name="stock"><br>
+
+        <input type="submit" value="Add employee"><br>
+        <h1>{{ msg }}</h1>
+    </form>
+
+    
+</body>
+</html>

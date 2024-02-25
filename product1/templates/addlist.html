@@ -1,0 +1,379 @@
+{% comment %} <!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Add Product</title>
+</head>
+<body>
+    <h1>Add Product</h1>
+    <form method="post" action="{% url 'add' %}">
+        {% csrf_token %}
+        <label for="company">Company:</label>
+        <input type="text" id="company" name="company"><br>
+        <label for="description">Description:</label>
+        <textarea id="description" name="description"></textarea><br>
+        <label for="price">Price:</label>
+        <input type="text" id="price" name="price"><br>
+        <label for="stock">Stock:</label>
+        <input type="text" id="stock" name="stock"><br>
+        <button type="submit">Add Product</button>
+    </form>
+
+    <form action="{% url 'display' %}" method="get">
+        <input type="submit" value="Display"><br>
+        <table>
+            <tr>
+                <td>Product ID</td>
+                <td>Company</td>
+                <td>Description</td>
+                <td>Price</td>
+                <td>Stock</td>
+            </tr>
+            {% for i in pdt %}
+            <tr>
+                <td>{{ i.id }}</td>
+                <td>{{ i.company }}</td>
+                <td>{{ i.description }}</td>
+                <td>{{ i.price }}</td>
+                <td>{{ i.stock }}</td>
+
+            </tr>
+            {% endfor %}
+
+        </table>
+
+    </form>
+    <form action="{% url 'update' %}" method="post">
+        {% csrf_token %}
+        <label for="oldcompanyname">Old Company Name:</label>
+        <input type="text" id="oldcompanyname" name="oldcompanyname" required><br>
+        <label for="newcompanyname">New Name:</label>
+        <input type="text" id="newcompanyname" name="newcompanyname" required><br>
+        <input type="submit" value="Update">
+    </form>
+    
+    <form action="{% url 'delete' %}" method="post">
+        {% csrf_token %}
+        Company Name to delete: <input type="text" name="company"><br>
+        <input type="submit" value="Delete"><br>
+        {{ msg }}
+    </form>
+
+    {% if msg %}
+        <p>{{ msg }}</p>
+    {% endif %}
+</body>
+</html> {% endcomment %}
+
+
+
+
+
+{% comment %} <!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Add Product</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f7f6;
+            color: #333;
+        }
+
+        h1 {
+            text-align: center;
+            color: #102a43;
+            margin: 40px 0 20px;
+        }
+
+        form {
+            background: #fff;
+            padding: 25px;
+            border-radius: 10px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            max-width: 600px;
+            margin: 20px auto;
+        }
+
+        label {
+            margin-bottom: 10px;
+            display: block;
+            font-weight: bold;
+            color: #102a43;
+        }
+
+        input[type="text"],
+        textarea {
+            width: calc(100% - 20px);
+            padding: 10px;
+            margin-bottom: 20px;
+            border-radius: 5px;
+            border: 1px solid #ccc;
+            box-sizing: border-box;
+        }
+
+        button[type="submit"], input[type="submit"] {
+            background-color: #61a0ff;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            margin: 10px 0;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        button[type="submit"]:hover, input[type="submit"]:hover {
+            background-color: #4d90fe;
+        }
+
+        table {
+            width: 90%;
+            margin: 20px auto;
+            border-collapse: collapse;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.06);
+        }
+
+        th, td {
+            padding: 12px;
+            text-align: left;
+            border-bottom: 1px solid #ddd;
+        }
+
+        th {
+            background-color: #f4f7f6;
+            color: #333;
+        }
+
+        tr:hover {
+            background-color: #f4f7f6;
+        }
+
+        p {
+            text-align: center;
+            padding: 20px;
+            background-color: #e1ecf1;
+            color: #102a43;
+            border-left: 6px solid #4d90fe;
+            margin: 20px auto;
+            width: 90%;
+            border-radius: 5px;
+        }
+    </style>
+</head>
+<body>
+    <h1>Add Product</h1>
+    <form method="post" action="{% url 'add' %}">
+        {% csrf_token %}
+        <label for="company">Company:</label>
+        <input type="text" id="company" name="company"><br>
+        <label for="description">Description:</label>
+        <textarea id="description" name="description"></textarea><br>
+        <label for="price">Price:</label>
+        <input type="text" id="price" name="price"><br>
+        <label for="stock">Stock:</label>
+        <input type="text" id="stock" name="stock"><br>
+        <button type="submit">Add Product</button>
+    </form>
+    <form action="{% url 'display' %}" method="get">
+        <input type="submit" value="Display Products">
+        <table>
+            <tr>
+                <th>Product ID</th>
+                <th>Company</th>
+                <th>Description</th>
+                <th>Price</th>
+                <th>Stock</th>
+            </tr>
+            {% for i in pdt %}
+            <tr>
+                <td>{{ i.id }}</td>
+                <td>{{ i.company }}</td>
+                <td>{{ i.description }}</td>
+                <td>{{ i.price }}</td>
+                <td>{{ i.stock }}</td>
+            </tr>
+            {% endfor %}
+        </table>
+    </form>
+    <form action="{% url 'update' %}" method="post">
+        {% csrf_token %}
+        <label for="oldcompanyname">Old Company Name:</label>
+        <input type="text" id="oldcompanyname" name="oldcompanyname" required><br>
+        <label for="newcompanyname">New Name:</label>
+        <input type="text" id="newcompanyname" name="newcompanyname" required><br>
+        <input type="submit" value="Update Company Name">
+    </form>
+    <form action="{% url 'delete' %}" method="post">
+        {% csrf_token %}
+        <label for="company">Company Name to delete:</label>
+        <input type="text" id="company" name="company"><br>
+        <input type="submit" value="Delete Company">
+    </form>
+    {% if msg %}
+        <p>{{ msg }}</p>
+    {% endif %}
+</body>
+</html> {% endcomment %}
+
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Product Management</title>
+    <style>
+        body {
+            background-image: url('ai.jpg');
+            background-repeat: no-repeat;
+            background-attachment: fixed;
+            background-size: 100% 100%;
+            
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            margin: 0;
+            padding: 20px;
+            background-color: #f4f7f6;
+            display: flex;
+            justify-content: space-around;
+            flex-wrap: wrap;
+        }
+
+        .section {
+            background-color: #ffffff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            margin: 10px;
+            flex-basis: calc(33% - 20px);
+            display: flex;
+            flex-direction: column;
+        }
+
+        h1 {
+            color: #102a43;
+            font-size: 24px;
+            margin-bottom: 20px;
+        }
+
+        form {
+            display: flex;
+            flex-direction: column;
+            margin-bottom: 20px;
+        }
+
+        label {
+            margin-bottom: 5px;
+        }
+
+        input[type="text"], textarea, input[type="submit"] {
+            padding: 8px;
+            margin-bottom: 15px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+
+        button[type="submit"], input[type="submit"] {
+            cursor: pointer;
+            background-color: #007bff;
+            color: white;
+            border: none;
+            transition: background-color 0.3s;
+        }
+
+        button[type="submit"]:hover, input[type="submit"]:hover {
+            background-color: #0056b3;
+        }
+
+        .display-container table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+
+        th, td {
+            padding: 8px;
+            border: 1px solid #ccc;
+            text-align: left;
+        }
+
+        th {
+            background-color: #f0f0f0;
+        }
+
+        tr:nth-child(even) {
+            background-color: #f9f9f9;
+        }
+    </style>
+</head>
+<body>
+    <div class="section">
+        <h1>Add Product</h1>
+        <form method="post" action="{% url 'add' %}">
+            {% csrf_token %}
+            <label for="company">Company:</label>
+            <input type="text" id="company" name="company">
+            <label for="description">Description:</label>
+            <textarea id="description" name="description"></textarea>
+            <label for="price">Price:</label>
+            <input type="text" id="price" name="price">
+            <label for="stock">Stock:</label>
+            <input type="text" id="stock" name="stock">
+            <input type="submit" value="Add Product">
+        </form>
+    </div>
+
+    <div class="section">
+        <h1>Update Product</h1>
+        <form action="{% url 'update' %}" method="post">
+            {% csrf_token %}
+            <label for="oldcompanyname">Old Company Name:</label>
+            <input type="text" id="oldcompanyname" name="oldcompanyname">
+            <label for="newcompanyname">New Name:</label>
+            <input type="text" id="newcompanyname" name="newcompanyname">
+            <input type="submit" value="Update Product">
+        </form>
+    </div>
+
+    <div class="section">
+        <h1>Delete Product</h1>
+        <form action="{% url 'delete' %}" method="post">
+            {% csrf_token %}
+            <label for="company">Company Name:</label>
+            <input type="text" id="company" name="company">
+            <input type="submit" value="Delete Product">
+        </form>
+    </div>
+
+    <div class="section display-container">
+        <h1>Display Products</h1>
+        <form action="{% url 'display' %}" method="get">
+            <input type="submit" value="Display Products">
+            <table>
+                <tr>
+                    <th>Product ID</th>
+                    <th>Company</th>
+                    <th>Description</th>
+                    <th>Price</th>
+                    <th>Stock</th>
+                </tr>
+                {% for i in pdt %}
+                <tr>
+                    <td>{{ i.id }}</td>
+                    <td>{{ i.company }}</td>
+                    <td>{{ i.description }}</td>
+                    <td>{{ i.price }}</td>
+                    <td>{{ i.stock }}</td>
+                </tr>
+                {% endfor %}
+            </table>
+        </form>
+    </div>
+</body>
+</html>
