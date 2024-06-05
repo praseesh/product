@@ -1,8 +1,7 @@
 """
 URL configuration for product project.
 
-The `urlpatterns` list routes URLs to views. For more information please see:
-views
+
 
 """
 from django.contrib import admin
