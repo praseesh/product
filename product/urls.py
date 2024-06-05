@@ -1,6 +1,4 @@
 """
-URL configuration for product project.
-
 
 
 """
