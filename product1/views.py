@@ -7,7 +7,6 @@ from django.contrib.auth import authenticate, login, logout
 
 
 @login_required
-
 def home(request):
     return render(request, "addlist.html")
 
