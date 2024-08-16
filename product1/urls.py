@@ -10,7 +10,7 @@ urlpatterns = [
     path('delete/', views.delete, name='delete'),
 
     path('accounts/login/', views.loginview, name = 'login'),
-    path('logout/',views.logout,name='logout'),
+    path('logout/', views.logout,name='logout'),
     path('accounts/sign_up/', views.sign_up, name="signup"),
     path('reset/', views.Resethome,name='reset'),
     path('passwordreset/',views.resetPassword, name="passwordreset")
