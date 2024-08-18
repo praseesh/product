@@ -42,6 +42,7 @@ def sign_up(request):
 def Resethome(request):
     return render(request,'ResetPassword.html')
 
+
 def resetPassword(request):
     uname = request.POST['uname']
     newpwd = request.POST ['password']
